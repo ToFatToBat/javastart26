@@ -49,7 +49,7 @@ public class Budget {
     public String toString() {
         return "Budget{" +
                 "id=" + id +
-                ", type='" + type + '\'' +
+                ", type='" + iOType + '\'' +
                 ", description='" + description + '\'' +
                 ", amount=" + amount +
                 '}';
