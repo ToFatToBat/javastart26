@@ -6,19 +6,18 @@ public class Budget {
     private String description;
     private double amount;
 
-    public Budget(long id, String iOType, String description, double amount) {
-        this.id = id;
+    public Budget() {}
+
+    public Budget(String iOType, String description, double amount) {
         this.iOType = iOType;
         this.description = description;
         this.amount = amount;
     }
 
+    public void setId(long id) { this.id = id; }
+
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getiOType() {
