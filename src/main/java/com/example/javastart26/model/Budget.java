@@ -14,6 +14,13 @@ public class Budget {
         this.amount = amount;
     }
 
+    public Budget(long id, String iOType, String description, double amount) {
+        this.id = id;
+        this.iOType = iOType;
+        this.description = description;
+        this.amount = amount;
+    }
+
     public void setId(long id) { this.id = id; }
 
     public long getId() {

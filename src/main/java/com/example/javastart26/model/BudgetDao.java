@@ -57,13 +57,13 @@ public class BudgetDao<connection> {
     }
 
     public void update(Budget budget) {
-        final String sql = "update home_budget set id = ?, iotype = ?, description = ?, amount = ?";
+        final String sql = "update home_budget set iotype=?, description=?, amount=? where id=?";
         try {
             PreparedStatement prepStmt = connection.prepareStatement(sql);
-            prepStmt.setLong(1, budget.getId());
-            prepStmt.setString(2, budget.getiOType());
-            prepStmt.setString(3, budget.getDescription());
+            prepStmt.setString(1, budget.getiOType());
+            prepStmt.setString(2, budget.getDescription());
             prepStmt.setDouble(3, budget.getAmount());
+            prepStmt.setLong(4, budget.getId());
             prepStmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Could not update record");
@@ -71,7 +71,7 @@ public class BudgetDao<connection> {
         }
     }
 
-    public void delete (long id) {
+    public void delete(long id) {
         final String sql = "delete from home_budget where id = ?";
         try {
             PreparedStatement prepStmt = connection.prepareStatement(sql);
@@ -81,5 +81,25 @@ public class BudgetDao<connection> {
             System.out.println("Could not delete row");
             e.printStackTrace();
         }
+    }
+
+    public Budget findAll(String IOType) {
+        final String sql = "select * from home_budget where iotype=?";
+        try {
+            PreparedStatement prepStmt = connection.prepareStatement(sql);
+            prepStmt.setString(1, IOType);
+            ResultSet resultSet = prepStmt.executeQuery();
+            while (resultSet.next()) {
+                Budget budget = new Budget();
+                budget.setId(resultSet.getLong(1));
+                budget.setiOType(resultSet.getString(2));
+                budget.setDescription(resultSet.getString(3));
+                budget.setAmount(resultSet.getDouble(4));
+                return budget;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
