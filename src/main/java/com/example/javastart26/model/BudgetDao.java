@@ -1,8 +1,8 @@
 package com.example.javastart26.model;
 
-import java.net.URL;
 import java.sql.*;
-import java.util.EmptyStackException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BudgetDao<connection> {
     private static final String URL = "jdbc:mysql://localhost:3306/budget?characterEncoding=utf8&serverTimezone=UTC&useSSL=false";
@@ -83,9 +83,10 @@ public class BudgetDao<connection> {
         }
     }
 
-    public Budget findAll(String IOType) {
+    public List<Budget> findAll(String IOType) {
         final String sql = "select * from home_budget where iotype=?";
         try {
+            List<Budget> budgetList = new ArrayList<>();
             PreparedStatement prepStmt = connection.prepareStatement(sql);
             prepStmt.setString(1, IOType);
             ResultSet resultSet = prepStmt.executeQuery();
@@ -95,8 +96,8 @@ public class BudgetDao<connection> {
                 budget.setiOType(resultSet.getString(2));
                 budget.setDescription(resultSet.getString(3));
                 budget.setAmount(resultSet.getDouble(4));
-                return budget;
-            }
+                budgetList.add(budget);
+            }   return budgetList;
         } catch (SQLException e) {
             e.printStackTrace();
         }
